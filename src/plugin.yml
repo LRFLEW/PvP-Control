@@ -1,0 +1,10 @@
+name: PvP Control
+main: com.LRFLEW.PvP.PvP
+version: 2.p.2.0
+website: http://lrflew.ismywebsite.com
+author: LRFLEW
+description: >
+             Allows players to control if they can be attacked
+commands:
+  pvp:
+    description: All commands related to PvP Control

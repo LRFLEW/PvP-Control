@@ -1,0 +1,10 @@
+# Compiled source #
+bin
+
+# Eclipse junk #
+.settings
+.classpath
+.project
+
+# OS generated files #
+*.DS_Store
