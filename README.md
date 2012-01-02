@@ -8,7 +8,7 @@ List PvP'd Players: Yes
 
 Cooldown (command): Yes
 
-Cooldown (attack): No
+Cooldown (attack): Yes
 
 PvP activation announcement: No
 

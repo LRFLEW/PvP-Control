@@ -35,6 +35,9 @@ public class EntityEvents extends EntityListener{
 						if ( plugin.sets.pvpDefault ^ plugin.PvP.contains(attacker.getName()) || 
 								plugin.sets.pvpDefault ^ plugin.PvP.contains(defender.getName()) ) {
 							event.setCancelled(true);
+							long cooldown = System.currentTimeMillis() + (plugin.sets.cooldownAttack*1000);
+							if (plugin.cooldown.get(attacker.getName()) < cooldown)
+									plugin.cooldown.put(attacker.getName(), cooldown);
 						} else {
 							event.setCancelled(false);
 						}

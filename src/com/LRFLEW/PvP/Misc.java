@@ -15,21 +15,22 @@ public class Misc {
 			// if the attacker's spar partner isn't sparing him...
 			map.clear();
 			Bukkit.broadcastMessage("All spars canceled due to exception");
-			new MapMissmatchException().printStackTrace();
+			new MapMissmatchException(attacker + " -> " + defender).printStackTrace();
 			return false;
 		} else if (map.get(defender) != null && 
 				defender != map.get(map.get(defender))) {
 			//if the defender's spar partner isn't sparing him...
 			map.clear();
 			Bukkit.broadcastMessage("All spars canceled due to exception");
-			new MapMissmatchException().printStackTrace();
+			new MapMissmatchException(defender + " -> " + attacker).printStackTrace();
 			return false;
 		} 
 		return true;
 	}
 	
-	public static class MapMissmatchException extends Exception {
+	private static class MapMissmatchException extends Exception {
 		private static final long serialVersionUID = 5414711621521839496L;
+		public MapMissmatchException(String string) { super(string); }
 	}
 	
 	public static class SparRCncl extends TimerTask {
