@@ -1,5 +1,6 @@
 package com.LRFLEW.PvP;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -22,8 +23,8 @@ public class Commands implements CommandExecutor {
 					return true;
 				} else {
 					if (plugin.cooldown.containsKey(player.getName())) plugin.cooldown.remove(player.getName());
-					if (!plugin.PvP.contains(player)) {
-						plugin.PvP.add(player);
+					if (!plugin.PvP.contains(player.getName())) {
+						plugin.PvP.add(player.getName());
 						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOnToOff*1000));
 					}
 					player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "On" + Settings.preFx + " for you. Beware! " +
@@ -39,8 +40,8 @@ public class Commands implements CommandExecutor {
 					player.sendMessage(Settings.preFx + "You need to wait " + plugin.sets.cooldownOnToOff + " seconds before you can turn PVP off");
 					return true;
 				} else {
-					if (plugin.PvP.contains(player)) {
-						plugin.PvP.remove(player);
+					if (plugin.PvP.contains(player.getName())) {
+						plugin.PvP.remove(player.getName());
 						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOffToOn*1000));
 					}
 					player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "Off" + Settings.preFx + " for you. " +
@@ -144,17 +145,13 @@ public class Commands implements CommandExecutor {
 			if (sender instanceof Player) {
 				Player player = (Player)sender;
 				player.sendMessage(Settings.preFx + "Players with PvP on:");
-				for (Player p : plugin.getServer().getOnlinePlayers()) {
-					if (plugin.PvP.contains(p)) {
-						player.sendMessage("    " + p.getDisplayName());
-					}
+				for (String p : plugin.PvP) {
+					player.sendMessage("    " + Bukkit.getPlayerExact(p).getDisplayName());
 				}
 			} else {
 				System.out.println("Players with PvP on:");
-				for (Player p : plugin.getServer().getOnlinePlayers()) {
-					if (plugin.PvP.contains(p)) {
-						System.out.println("\t" + p.getName());
-					}
+				for (String p : plugin.PvP) {
+					System.out.println("\t" + p);
 				}
 			}
 			return true;
@@ -174,7 +171,7 @@ public class Commands implements CommandExecutor {
 		}
 		if (sender instanceof Player) {
 			Player player = (Player)sender;
-			if ( plugin.PvP.contains(player)) {
+			if ( plugin.PvP.contains(player.getName())) {
 				player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "On" + Settings.preFx + " for you. Beware!");
 			} else {
 				player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "Off" + Settings.preFx + " for you. " +

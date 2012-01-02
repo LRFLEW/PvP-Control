@@ -30,14 +30,9 @@ public class EntityEvents extends EntityListener{
 								event.setCancelled(true);
 							}
 						}
-					} else if (plugin.sets.pvpDefault){
-						if ( plugin.PvP.contains(attacker) || plugin.PvP.contains(defender) ) {
-							event.setCancelled(true);
-						} else {
-							event.setCancelled(false);
-						}
 					} else {
-						if ( !plugin.PvP.contains(attacker) || !plugin.PvP.contains(defender) ) {
+						if ( plugin.sets.pvpDefault ^ plugin.PvP.contains(attacker.getName()) || 
+								plugin.sets.pvpDefault ^ plugin.PvP.contains(defender.getName()) ) {
 							event.setCancelled(true);
 						} else {
 							event.setCancelled(false);

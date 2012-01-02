@@ -30,7 +30,7 @@ public class PlayerEvents extends PlayerListener{
 	
 	@Override
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		plugin.PvP.remove(event.getPlayer());
+		plugin.PvP.remove(event.getPlayer().getName());
 	}
 	
 }
