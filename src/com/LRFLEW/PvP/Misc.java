@@ -1,5 +1,6 @@
 package com.LRFLEW.PvP;
 
+import java.util.HashMap;
 import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
@@ -8,7 +9,7 @@ import org.bukkit.entity.Player;
 
 public class Misc {
 	
-	public static boolean PvpMatchCheck ( PlayerHashMap map, Player attacker, Player defender) {
+	public static boolean PvpMatchCheck ( HashMap<String, String> map, String attacker, String defender) {
 		if (map.get(attacker) != null && 
 				attacker != map.get(map.get(attacker))) { 
 			// if the attacker's spar partner isn't sparing him...
@@ -33,38 +34,38 @@ public class Misc {
 	
 	public static class SparRCncl extends TimerTask {
 		private final Player sparri;
-		private final PlayerHashMap set;
+		private final HashMap<String, String> set;
 
-		public SparRCncl (Player sparri, PlayerHashMap set) {
+		public SparRCncl (Player sparri, HashMap<String, String> set) {
 			this.set = set;
 			this.sparri = sparri;
 		}
 
 		@Override
 		public void run() {
-			sparri.sendMessage(Settings.preFx + "The spar request with " + set.get(sparri).getDisplayName() + " has been canceled");
-			set.get(sparri).sendMessage(Settings.preFx + "The spar request with " + sparri.getDisplayName() + " has been canceled");
-			set.remove(sparri);
+			sparri.sendMessage(Settings.preFx + "The spar request with " + Bukkit.getPlayerExact(set.get(sparri)).getDisplayName() + " has been canceled");
+			Bukkit.getPlayerExact(set.get(sparri.getName())).sendMessage(Settings.preFx + "The spar request with " + sparri.getDisplayName() + " has been canceled");
+			set.remove(sparri.getName());
 			this.cancel();
 		}
 	}
 	
 	public static class SparCncl extends TimerTask {
 		private final Player sparri;
-		private final PlayerHashMap set;
+		private final HashMap<String, String> set;
 
-		public SparCncl (Player sparri, PlayerHashMap set) {
+		public SparCncl (Player sparri, HashMap<String, String> set) {
 			this.set = set;
 			this.sparri = sparri;
 		}
 
 		@Override
 		public void run() {
-			sparri.sendMessage(Settings.preFx + "The spar request with " + ChatColor.WHITE + set.get(sparri).getDisplayName() + 
+			sparri.sendMessage(Settings.preFx + "The spar request with " + ChatColor.WHITE + Bukkit.getPlayerExact(set.get(sparri)).getDisplayName() + 
 					Settings.preFx + " has been canceled");
-			set.get(sparri).sendMessage(Settings.preFx + "The spar request with " + ChatColor.WHITE + sparri.getDisplayName() + 
+			Bukkit.getPlayerExact(set.get(sparri.getName())).sendMessage(Settings.preFx + "The spar request with " + ChatColor.WHITE + sparri.getDisplayName() + 
 					Settings.preFx + " has been canceled");
-			set.remove(sparri);
+			set.remove(sparri.getName());
 			this.cancel();
 		}
 	}

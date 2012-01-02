@@ -1,5 +1,6 @@
 package com.LRFLEW.PvP;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -22,9 +23,9 @@ public class EntityEvents extends EntityListener{
 				Player attacker = (Player)entEvent.getDamager();
 				Player defender = (Player)entEvent.getEntity();
 				if (plugin.killSwitch == 0) {
-					if ((plugin.spar.get(attacker) != null) || (plugin.spar.get(defender) != null)) {
-						if (Misc.PvpMatchCheck(plugin.spar, attacker, defender)) {
-							if (defender == plugin.spar.get(attacker)) {
+					if ((plugin.spar.get(attacker.getName()) != null) || (plugin.spar.get(defender.getName()) != null)) {
+						if (Misc.PvpMatchCheck(plugin.spar, attacker.getName(), defender.getName())) {
+							if (defender == Bukkit.getPlayerExact(plugin.spar.get(attacker.getName()))) {
 								event.setCancelled(false);
 							} else {
 								event.setCancelled(true);
@@ -51,10 +52,10 @@ public class EntityEvents extends EntityListener{
 	public void onEntityDeath (EntityDeathEvent event) {
 		if (event.getEntity() instanceof Player) {
 			Player dier = (Player)event.getEntity();
-			if (plugin.spar.containsKey(dier)) {
-				Player killer = plugin.spar.get(dier);
-				plugin.spar.remove(dier);
-				plugin.spar.remove(killer);
+			if (plugin.spar.containsKey(dier.getName())) {
+				Player killer = Bukkit.getPlayerExact(plugin.spar.get(dier.getName()));
+				plugin.spar.remove(dier.getName());
+				plugin.spar.remove(killer.getName());
 				killer.sendMessage(Settings.preFx + "You have killed " + dier.getDisplayName() + ".  " +
 						"Have fun with the spoils");
 			}

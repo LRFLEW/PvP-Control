@@ -16,8 +16,8 @@ public class PvP extends JavaPlugin {
 	Timer timer = new Timer();
 	HashSet<String> PvP = new HashSet<String>();
 	HashMap<String, Long> cooldown = new HashMap<String, Long>();
-	PlayerHashMap spar = new PlayerHashMap();
-	PlayerHashMap sparRequest = new PlayerHashMap();
+	HashMap<String, String> spar = new HashMap<String, String>();
+	HashMap<String, String> sparRequest = new HashMap<String, String>();
 	
 	public final Settings sets = new Settings();
 	

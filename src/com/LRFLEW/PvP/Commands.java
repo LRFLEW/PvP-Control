@@ -60,7 +60,7 @@ public class Commands implements CommandExecutor {
 						sparrer.sendMessage("Player not Found");
 						return true;
 					}
-					plugin.sparRequest.put(sparri, sparrer);
+					plugin.sparRequest.put(sparri.getName(), sparrer.getName());
 					sparri.sendMessage(sparrer.getDisplayName() + Settings.preFx + " wants to spar you.  ");
 					sparri.sendMessage(Settings.preFx + "Accept by typing " + ChatColor.WHITE + "/pvp yes" + 
 							Settings.preFx + " or deny with " + ChatColor.WHITE + "/pvp no");
@@ -72,15 +72,15 @@ public class Commands implements CommandExecutor {
 		if (args.length >= 1 && args[0].equalsIgnoreCase("yes")) {
 			if (sender instanceof Player) {
 				Player sparri = (Player)sender;
-				if (plugin.sparRequest.containsKey(sparri)) {
-					if (plugin.sparRequest.get(sparri) == null) {
-						plugin.sparRequest.remove(sparri);
+				if (plugin.sparRequest.containsKey(sparri.getName())) {
+					if (plugin.sparRequest.get(sparri.getName()) == null) {
+						plugin.sparRequest.remove(sparri.getName());
 						System.out.println("ERROR: " + sparri.getName() + " has been requested to be sparred by null");
 					} else {
-						Player sparrer = plugin.sparRequest.get(sparri);
-						plugin.sparRequest.remove(sparri);
-						plugin.spar.put(sparri, sparrer);
-						plugin.spar.put(sparrer, sparri);
+						Player sparrer = Bukkit.getPlayerExact(plugin.sparRequest.get(sparri.getName()));
+						plugin.sparRequest.remove(sparri.getName());
+						plugin.spar.put(sparri.getName(), sparrer.getName());
+						plugin.spar.put(sparrer.getName(), sparri.getName());
 						sparri.sendMessage(Settings.preFx + "You are now sparring " + ChatColor.WHITE + sparrer.getDisplayName() + 
 								Settings.preFx + ".  Good luck");
 						sparrer.sendMessage(Settings.preFx + "You are now sparring " + ChatColor.WHITE + sparrer.getDisplayName() + 
@@ -93,13 +93,13 @@ public class Commands implements CommandExecutor {
 		if (args.length >= 1 && args[0].equalsIgnoreCase("no")) {
 			if (sender instanceof Player) {
 				Player sparri = (Player)sender;
-				if (plugin.sparRequest.containsKey(sparri)) {
-					if (plugin.sparRequest.get(sparri) == null) {
-						plugin.sparRequest.remove(sparri);
+				if (plugin.sparRequest.containsKey(sparri.getName())) {
+					if (plugin.sparRequest.get(sparri.getName()) == null) {
+						plugin.sparRequest.remove(sparri.getName());
 						System.out.println("ERROR: " + sparri.getName() + " has denied to be sparred by null");
 					} else {
-						Player sparrer = plugin.sparRequest.get(sparri);
-						plugin.sparRequest.remove(sparri);
+						Player sparrer = Bukkit.getPlayerExact(plugin.sparRequest.get(sparri.getName()));
+						plugin.sparRequest.remove(sparri.getName());
 						sparri.sendMessage("You have denied the spar request from " + sparrer.getDisplayName());
 						sparrer.sendMessage(sparrer.getDisplayName() + " Denied you sparring request.  Sorry");
 						return true;
