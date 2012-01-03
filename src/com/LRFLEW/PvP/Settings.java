@@ -12,6 +12,7 @@ public class Settings {
 	public int cooldownSparCombat = 120;
 	
 	public boolean announce = true;
+	public boolean loginMessage = true;
 	
 	public static final ChatColor preFx = ChatColor.RED;
 

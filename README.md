@@ -20,7 +20,7 @@ Change default setting: Yes
 
 Localization: No
 
-Toggle startup message: No
+Toggle startup message: Yes
 
 Hooks: No
 

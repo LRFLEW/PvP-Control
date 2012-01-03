@@ -17,6 +17,7 @@ public class PlayerEvents extends PlayerListener{
 	
 	@Override
 	public void onPlayerJoin(PlayerJoinEvent event) {
+		if (!plugin.sets.loginMessage) return;
 		if (plugin.sets.pvpDefault) {
 			event.getPlayer().sendMessage(Settings.preFx + "PvP is now turned " + 
 					ChatColor.WHITE + "On" + Settings.preFx + " for you. " +
