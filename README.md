@@ -24,7 +24,7 @@ Toggle startup message: Yes
 
 Hooks: No
 
-Admin Override: No
+Admin Override: Yes
 
 MultiWorld Support: No (not sure what, though)
 

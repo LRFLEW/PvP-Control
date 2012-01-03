@@ -14,6 +14,7 @@ public class Settings {
 	
 	public boolean announce = true;
 	public boolean loginMessage = true;
+	public boolean adminOverride = true;
 	
 	public Event.Priority priority = Event.Priority.Low;
 	

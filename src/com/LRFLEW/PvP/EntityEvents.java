@@ -28,24 +28,27 @@ public class EntityEvents extends EntityListener{
 							if (defender == Bukkit.getPlayerExact(plugin.spar.get(attacker.getName()))) {
 								event.setCancelled(false);
 							} else {
-								event.setCancelled(true);
+								if (plugin.sets.adminOverride && attacker.isOp()) event.setCancelled(false);
+								else event.setCancelled(true);
 							}
 						}
 					} else {
 						if ( plugin.sets.pvpDefault ^ plugin.PvP.contains(attacker.getName()) || 
 								plugin.sets.pvpDefault ^ plugin.PvP.contains(defender.getName()) ) {
-							event.setCancelled(true);
+							if (plugin.sets.adminOverride && attacker.isOp()) event.setCancelled(false);
+							else event.setCancelled(true);
+						} else {
+							event.setCancelled(false);
 							long cooldown = System.currentTimeMillis() + (plugin.sets.cooldownAttack*1000);
 							if (plugin.cooldown.get(attacker.getName()) < cooldown)
 									plugin.cooldown.put(attacker.getName(), cooldown);
-						} else {
-							event.setCancelled(false);
 						}
 					}
 				} else if (plugin.killSwitch >= 1){
 					event.setCancelled(false);
 				} else {
-					event.setCancelled(true);
+					if (plugin.sets.adminOverride && attacker.isOp()) event.setCancelled(false);
+					else event.setCancelled(true);
 				}
 			}
 		}
