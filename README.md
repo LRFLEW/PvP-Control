@@ -10,7 +10,7 @@ Cooldown (command): Yes
 
 Cooldown (attack): Yes
 
-PvP activation announcement: No
+PvP activation announcement: Yes
 
 Permissions: No
 

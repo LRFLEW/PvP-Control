@@ -26,6 +26,7 @@ public class Commands implements CommandExecutor {
 					if (!plugin.PvP.contains(player.getName())) {
 						plugin.PvP.add(player.getName());
 						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOnToOff*1000));
+						if (plugin.sets.announce) Misc.announceExclude(Settings.preFx + player.getDisplayName() + " is raring to fight", player);
 					}
 					player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "On" + Settings.preFx + " for you. Beware! " +
 							"Turn it off by typing " + ChatColor.WHITE + "/pvp off");
@@ -43,6 +44,7 @@ public class Commands implements CommandExecutor {
 					if (plugin.PvP.contains(player.getName())) {
 						plugin.PvP.remove(player.getName());
 						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOffToOn*1000));
+						if (plugin.sets.announce) Misc.announceExclude(Settings.preFx + player.getDisplayName() + " is done fighting", player);
 					}
 					player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "Off" + Settings.preFx + " for you. " +
 							"Just look out for spiders :)");
@@ -85,6 +87,8 @@ public class Commands implements CommandExecutor {
 								Settings.preFx + ".  Good luck");
 						sparrer.sendMessage(Settings.preFx + "You are now sparring " + ChatColor.WHITE + sparrer.getDisplayName() + 
 								Settings.preFx + ".  Good luck");
+						if (plugin.sets.announce) Misc.announceExclude(Settings.preFx + sparri.getDisplayName() + " and " + sparrer.getDisplayName() + 
+								" are noew dueling eachother.  Epic", sparrer, sparri);
 						return true;
 					}
 				}
@@ -108,36 +112,22 @@ public class Commands implements CommandExecutor {
 			}
 		}
 		if (args.length >= 1 && args[0].equalsIgnoreCase("killswitch") || args.length >= 1 && args[0].equalsIgnoreCase("ks")) {
-			if (sender instanceof Player) {
-				Player player = (Player)sender;
-				if (player.isOp()) {
-					if (args[1].equalsIgnoreCase("dissable") || args[1].equalsIgnoreCase("dis")) {
-						plugin.killSwitch = 0;
-						player.sendMessage("Users can now set their own PvP status");
-					} else {
-						if (args[1].equalsIgnoreCase("on")) {
-							plugin.killSwitch = 1;
-							player.sendMessage("PvP is now forced on for everybody");
-						} if (args[1].equalsIgnoreCase("off")) {
-							plugin.killSwitch = -1;
-							player.sendMessage("PvP is now forced off for everybody");
-						}
-					}
+			if (sender instanceof Player) 
+				if (!((Player)sender).isOp()) {
+					sender.sendMessage((Settings.preFx + "You don't have permissions to run this command"));
 					return true;
-				} else {
-					player.sendMessage("You don't have permissions to run this command");
 				}
+			if (args[1].equalsIgnoreCase("dissable") || args[1].equalsIgnoreCase("dis")) {
+				plugin.killSwitch = 0;
+				Bukkit.broadcastMessage("Users can now set their own PvP status");
 			} else {
-				if (args[1] == "null") {
-					plugin.killSwitch = 0;
-					System.out.println("Users can now set their own PvP status");
-				} else {
-					plugin.killSwitch = Byte.parseByte(args[1]);
-					if (plugin.killSwitch >= 1) {
-						System.out.println("PvP is now forced on for everybody");
-					} else {
-						System.out.println("PvP is now forced off for everybody");
-					}
+				if (args[1].equalsIgnoreCase("on")) {
+					plugin.killSwitch = 1;
+					Bukkit.broadcastMessage(Settings.preFx + "PvP is now forced on for everybody");
+				} if (args[1].equalsIgnoreCase("off")) {
+					plugin.killSwitch = -1;
+					Bukkit.broadcastMessage(Settings.preFx + "PvP is now forced off for everybody");
+					return true;
 				}
 			}
 		}

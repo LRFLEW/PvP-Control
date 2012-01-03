@@ -11,6 +11,8 @@ public class Settings {
 	public int cooldownSparRequest = 30;
 	public int cooldownSparCombat = 120;
 	
+	public boolean announce = true;
+	
 	public static final ChatColor preFx = ChatColor.RED;
 
 	public void load () {

@@ -71,4 +71,15 @@ public class Misc {
 		}
 	}
 	
+	public static void announceExclude (String msg, Player... players) {
+		Player[] list = Bukkit.getOnlinePlayers();
+		for (Player p : list) {
+			boolean test = true;
+			for (Player t : players) {
+				if (p == t) test = false;
+			}
+			if (test) p.sendMessage(msg);
+		}
+	}
+	
 }
