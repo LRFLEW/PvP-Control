@@ -38,10 +38,10 @@ public class PvP extends JavaPlugin {
 		PluginManager pm = getServer().getPluginManager();
 		EntityEvents entityListener = new EntityEvents(this);
 		PlayerEvents playerListener = new PlayerEvents(this);
-		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, Priority.Low, this);
-		pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Normal, this);
-		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Normal, this);
-		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Normal, this);
+		pm.registerEvent(Event.Type.ENTITY_DAMAGE, entityListener, sets.priority, this);
+		pm.registerEvent(Event.Type.ENTITY_DEATH, entityListener, Priority.Monitor, this);
+		pm.registerEvent(Event.Type.PLAYER_JOIN, playerListener, Priority.Monitor, this);
+		pm.registerEvent(Event.Type.PLAYER_QUIT, playerListener, Priority.Monitor, this);
 		
 		this.getCommand("pvp").setExecutor(new Commands(this));
 		

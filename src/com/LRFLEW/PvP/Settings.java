@@ -1,6 +1,7 @@
 package com.LRFLEW.PvP;
 
 import org.bukkit.ChatColor;
+import org.bukkit.event.Event;
 
 public class Settings {
 	
@@ -13,6 +14,8 @@ public class Settings {
 	
 	public boolean announce = true;
 	public boolean loginMessage = true;
+	
+	public Event.Priority priority = Event.Priority.Low;
 	
 	public static final ChatColor preFx = ChatColor.RED;
 
