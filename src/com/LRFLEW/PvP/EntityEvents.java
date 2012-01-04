@@ -40,7 +40,8 @@ public class EntityEvents extends EntityListener{
 						} else {
 							event.setCancelled(false);
 							long cooldown = System.currentTimeMillis() + (plugin.sets.cooldownAttack*1000);
-							if (plugin.cooldown.get(attacker.getName()) < cooldown)
+							if (plugin.cooldown.get(attacker.getName()) != null && 
+									plugin.cooldown.get(attacker.getName()) < cooldown)
 									plugin.cooldown.put(attacker.getName(), cooldown);
 						}
 					}

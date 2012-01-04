@@ -1,6 +1,7 @@
 package com.LRFLEW.PvP;
 
 import java.util.HashMap;
+import java.util.Map;
 import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
@@ -69,6 +70,23 @@ public class Misc {
 			set.remove(sparri.getName());
 			this.cancel();
 		}
+	}
+	
+	public static class Cleanup implements Runnable {
+		private final PvP plugin;
+		
+		public Cleanup (PvP instance) {
+			plugin = instance;
+		}
+
+		@Override
+		public void run() {
+			for (Map.Entry<String, Long> e : plugin.cooldown.entrySet()) {
+				if (e.getValue() <= System.currentTimeMillis())
+					plugin.cooldown.remove(e.getKey());
+			}
+		}
+		
 	}
 	
 	public static void announceExclude (String msg, Player... players) {

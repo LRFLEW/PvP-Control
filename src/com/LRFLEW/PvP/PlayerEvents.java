@@ -31,7 +31,16 @@ public class PlayerEvents extends PlayerListener{
 	
 	@Override
 	public void onPlayerQuit(PlayerQuitEvent event) {
-		plugin.PvP.remove(event.getPlayer().getName());
+		String name = event.getPlayer().getName();
+		plugin.PvP.remove(name);
+		plugin.cooldown.remove(name);
+		if (plugin.spar.get(name) != null)
+			plugin.spar.remove(plugin.spar.get(name));
+		plugin.spar.remove(name);
+		if (plugin.sparRequest.get(name) != null)
+			plugin.sparRequest.remove(
+					plugin.sparRequest.get(name));
+		plugin.sparRequest.remove(name);
 	}
 	
 }

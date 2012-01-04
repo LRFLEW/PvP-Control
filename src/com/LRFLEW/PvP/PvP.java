@@ -45,6 +45,9 @@ public class PvP extends JavaPlugin {
 		
 		this.getCommand("pvp").setExecutor(new Commands(this));
 		
+		getServer().getScheduler().scheduleAsyncRepeatingTask(this, new Misc.Cleanup(this), 
+				sets.cleanuptime*2, sets.cleanuptime);
+		
 		PluginDescriptionFile pdfFile = this.getDescription();
 		System.out.println( pdfFile.getName() + " version " + pdfFile.getVersion() + " is enabled!" );
 	}

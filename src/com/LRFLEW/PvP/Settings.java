@@ -11,6 +11,7 @@ public class Settings {
 	public int cooldownAttack = 5;
 	public int cooldownSparRequest = 30;
 	public int cooldownSparCombat = 120;
+	public long cleanuptime = 6000; // 5 mins * 60 secs/min * 20 ticks/sec
 	
 	public boolean announce = true;
 	public boolean loginMessage = true;
