@@ -9,8 +9,9 @@ public class Settings {
 	public int cooldownOnToOff = 10;
 	public int cooldownOffToOn = 5;
 	public int cooldownAttack = 5;
-	public int cooldownSparRequest = 30;
-	public int cooldownSparCombat = 120;
+	public int expireSparRequest = 30;
+	public int expireSparCombat = 120;
+	public int expireSparAttack = 10;
 	public long cleanuptime = 6000; // 5 mins * 60 secs/min * 20 ticks/sec
 	
 	public boolean announce = true;

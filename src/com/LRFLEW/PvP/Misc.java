@@ -2,10 +2,8 @@ package com.LRFLEW.PvP;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.TimerTask;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 public class Misc {
@@ -34,44 +32,6 @@ public class Misc {
 		public MapMissmatchException(String string) { super(string); }
 	}
 	
-	public static class SparRCncl extends TimerTask {
-		private final Player sparri;
-		private final HashMap<String, String> set;
-
-		public SparRCncl (Player sparri, HashMap<String, String> set) {
-			this.set = set;
-			this.sparri = sparri;
-		}
-
-		@Override
-		public void run() {
-			sparri.sendMessage(Settings.preFx + "The spar request with " + Bukkit.getPlayerExact(set.get(sparri)).getDisplayName() + " has been canceled");
-			Bukkit.getPlayerExact(set.get(sparri.getName())).sendMessage(Settings.preFx + "The spar request with " + sparri.getDisplayName() + " has been canceled");
-			set.remove(sparri.getName());
-			this.cancel();
-		}
-	}
-	
-	public static class SparCncl extends TimerTask {
-		private final Player sparri;
-		private final HashMap<String, String> set;
-
-		public SparCncl (Player sparri, HashMap<String, String> set) {
-			this.set = set;
-			this.sparri = sparri;
-		}
-
-		@Override
-		public void run() {
-			sparri.sendMessage(Settings.preFx + "The spar request with " + ChatColor.WHITE + Bukkit.getPlayerExact(set.get(sparri)).getDisplayName() + 
-					Settings.preFx + " has been canceled");
-			Bukkit.getPlayerExact(set.get(sparri.getName())).sendMessage(Settings.preFx + "The spar request with " + ChatColor.WHITE + sparri.getDisplayName() + 
-					Settings.preFx + " has been canceled");
-			set.remove(sparri.getName());
-			this.cancel();
-		}
-	}
-	
 	public static class Cleanup implements Runnable {
 		private final PvP plugin;
 		
@@ -98,6 +58,12 @@ public class Misc {
 			}
 			if (test) p.sendMessage(msg);
 		}
+	}
+	
+	public static void cleanupCooldown (PvP plugin, String name) {
+		if (plugin.cooldown.get(name) != null && 
+				plugin.cooldown.get(name) <= System.currentTimeMillis())
+			plugin.cooldown.remove(name);
 	}
 	
 }

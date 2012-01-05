@@ -2,7 +2,6 @@ package com.LRFLEW.PvP;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Timer;
 
 import org.bukkit.event.Event;
 import org.bukkit.event.Event.Priority;
@@ -13,11 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PvP extends JavaPlugin {
 	
 	byte killSwitch = 0;
-	Timer timer = new Timer();
 	HashSet<String> PvP = new HashSet<String>();
 	HashMap<String, Long> cooldown = new HashMap<String, Long>();
 	HashMap<String, String> spar = new HashMap<String, String>();
 	HashMap<String, String> sparRequest = new HashMap<String, String>();
+	HashMap<String, Long> sparExpire = new HashMap<String, Long>();
 	
 	public final Settings sets = new Settings();
 	
