@@ -30,4 +30,4 @@ MultiWorld Support: No (not sure what, though)
 
 Duel: Yes
 
-Adjust other's settings: No
+Adjust other's settings: Yes

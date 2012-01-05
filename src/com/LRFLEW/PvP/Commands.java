@@ -16,26 +16,42 @@ public class Commands implements CommandExecutor {
 	
 	public boolean onCommand (CommandSender sender, Command cmd, String commandLabel, String[] args) {
 		if (args.length >= 1 && args[0].equalsIgnoreCase("on")) {
-			if (sender instanceof Player) {
+			if (sender instanceof Player && args.length == 1) {
 				Player player = (Player)sender;
 				if (plugin.cooldown.get(player.getName()) != null && plugin.cooldown.get(player.getName()) > System.currentTimeMillis()) {
-					player.sendMessage(Settings.preFx + "You need to wait " + plugin.sets.cooldownOnToOff + " seconds before you can turn PVP off");
-					return true;
+						player.sendMessage(Settings.preFx + "You need to wait " + plugin.sets.cooldownOnToOff + " seconds before you can turn PVP on");
 				} else {
-					if (plugin.cooldown.containsKey(player.getName())) plugin.cooldown.remove(player.getName());
 					if (!plugin.PvP.contains(player.getName())) {
 						plugin.PvP.add(player.getName());
 						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOnToOff*1000));
 						if (plugin.sets.announce) Misc.announceExclude(Settings.preFx + player.getDisplayName() + " is raring to fight", player);
+					} else {
+						if (plugin.cooldown.containsKey(player.getName())) plugin.cooldown.remove(player.getName());
 					}
 					player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "On" + Settings.preFx + " for you. Beware! " +
 							"Turn it off by typing " + ChatColor.WHITE + "/pvp off");
-					return true;
+					}
+				return true;
+			} else if (args.length >= 2){
+				Player player = Bukkit.getPlayer(args[1]);
+				if (plugin.cooldown.get(player.getName()) != null && plugin.cooldown.get(player.getName()) > System.currentTimeMillis()) {
+					sender.sendMessage(Settings.preFx + "You need to wait " + plugin.sets.cooldownOnToOff + 
+							" seconds before you can turn PVP on for" + player.getDisplayName());
+				} else {
+					if (!plugin.PvP.contains(player.getName())) {
+						plugin.PvP.add(player.getName());
+						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOnToOff*1000));
+						if (plugin.sets.announce) Misc.announceExclude(Settings.preFx + player.getDisplayName() + " is raring to fight", player);
+					} else {
+						if (plugin.cooldown.containsKey(player.getName())) plugin.cooldown.remove(player.getName());
+					}
 				}
+				sender.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "On" + Settings.preFx + " for " + player.getDisplayName());
+				return true;
 			}
 		}
 		if (args.length >= 1 && args[0].equalsIgnoreCase("off")) {
-			if (sender instanceof Player) {
+			if (sender instanceof Player && args.length == 1) {
 				Player player = (Player)sender;
 				if (plugin.cooldown.get(player.getName()) != null && plugin.cooldown.get(player.getName()) > System.currentTimeMillis()) {
 					player.sendMessage(Settings.preFx + "You need to wait " + plugin.sets.cooldownOnToOff + " seconds before you can turn PVP off");
@@ -48,6 +64,21 @@ public class Commands implements CommandExecutor {
 					}
 					player.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "Off" + Settings.preFx + " for you. " +
 							"Just look out for spiders :)");
+					return true;
+				}
+			} else if (args.length >= 2) {
+				Player player = Bukkit.getPlayer(args[1]);
+				if (plugin.cooldown.get(player.getName()) != null && plugin.cooldown.get(player.getName()) > System.currentTimeMillis()) {
+					sender.sendMessage(Settings.preFx + "You need to wait " + plugin.sets.cooldownOnToOff + 
+							" seconds before you can turn PVP on for" + player.getDisplayName());
+					return true;
+				} else {
+					if (plugin.PvP.contains(player.getName())) {
+						plugin.PvP.remove(player.getName());
+						plugin.cooldown.put(player.getName(), System.currentTimeMillis() + (plugin.sets.cooldownOffToOn*1000));
+						if (plugin.sets.announce) Misc.announceExclude(Settings.preFx + player.getDisplayName() + " is done fighting", player);
+					}
+					sender.sendMessage(Settings.preFx + "PvP is " + ChatColor.WHITE + "On" + Settings.preFx + " for " + player.getDisplayName());
 					return true;
 				}
 			}
@@ -170,6 +201,8 @@ public class Commands implements CommandExecutor {
 			player.sendMessage(Settings.preFx + "Usage:");
 			player.sendMessage(ChatColor.WHITE + "   /PvP on" + Settings.preFx + " - you can be attacked by players");
 			player.sendMessage(ChatColor.WHITE + "   /PvP off" + Settings.preFx + " - players can't attack you");
+			Long l = plugin.cooldown.get(player.getName());
+			if (l != null && l <= System.currentTimeMillis()) plugin.cooldown.remove(player.getName());
 			return true;
 		} else {
 			System.out.println("Type \"pvp help\" for a list of commands");
