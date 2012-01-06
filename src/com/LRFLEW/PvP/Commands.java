@@ -108,7 +108,7 @@ public class Commands implements CommandExecutor {
 				if (plugin.sparRequest.containsKey(sparri.getName())) {
 					if (plugin.sparRequest.get(sparri.getName()) == null) {
 						plugin.sparRequest.remove(sparri.getName());
-						System.out.println("ERROR: " + sparri.getName() + " has been requested to be sparred by null");
+						new Misc.MapMissmatchException(sparri.getName() + " -> null");
 					} else {
 						Player sparrer = Bukkit.getPlayerExact(plugin.sparRequest.get(sparri.getName()));
 						plugin.sparRequest.remove(sparri.getName());
@@ -131,7 +131,7 @@ public class Commands implements CommandExecutor {
 				if (plugin.sparRequest.containsKey(sparri.getName())) {
 					if (plugin.sparRequest.get(sparri.getName()) == null) {
 						plugin.sparRequest.remove(sparri.getName());
-						System.out.println("ERROR: " + sparri.getName() + " has denied to be sparred by null");
+						new Misc.MapMissmatchException(sparri.getName() + " -> null");
 					} else {
 						Player sparrer = Bukkit.getPlayerExact(plugin.sparRequest.get(sparri.getName()));
 						plugin.sparRequest.remove(sparri.getName());
@@ -150,7 +150,7 @@ public class Commands implements CommandExecutor {
 				}
 			if (args[1].equalsIgnoreCase("dissable") || args[1].equalsIgnoreCase("dis")) {
 				plugin.killSwitch = 0;
-				Bukkit.broadcastMessage("Users can now set their own PvP status");
+				Bukkit.broadcastMessage(Settings.preFx + "Users can now set their own PvP status");
 			} else {
 				if (args[1].equalsIgnoreCase("on")) {
 					plugin.killSwitch = 1;
@@ -163,16 +163,15 @@ public class Commands implements CommandExecutor {
 			}
 		}
 		if (args.length >= 1 && args[0].equalsIgnoreCase("list")) {
-			if (sender instanceof Player) {
-				Player player = (Player)sender;
-				player.sendMessage(Settings.preFx + "Players with PvP on:");
-				for (String p : plugin.PvP) {
-					player.sendMessage("    " + Bukkit.getPlayerExact(p).getDisplayName());
-				}
-			} else {
-				System.out.println("Players with PvP on:");
-				for (String p : plugin.PvP) {
-					System.out.println("\t" + p);
+			sender.sendMessage(Settings.preFx + "Players with PvP on:");
+			String temp = "";
+			int i = 0;
+			for (String p : plugin.PvP) {
+				temp += ("    " + Bukkit.getPlayerExact(p).getDisplayName());
+				if (i >= 3) {
+					sender.sendMessage(temp);
+					temp = "";
+					i = 0;
 				}
 			}
 			return true;

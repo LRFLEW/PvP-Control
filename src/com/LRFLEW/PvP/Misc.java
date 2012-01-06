@@ -27,7 +27,7 @@ public class Misc {
 		return true;
 	}
 	
-	private static class MapMissmatchException extends Exception {
+	public static class MapMissmatchException extends Exception {
 		private static final long serialVersionUID = 5414711621521839496L;
 		public MapMissmatchException(String string) { super(string); }
 	}
