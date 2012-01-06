@@ -163,6 +163,10 @@ public class Commands implements CommandExecutor {
 			}
 		}
 		if (args.length >= 1 && args[0].equalsIgnoreCase("list")) {
+			if (plugin.PvP.isEmpty()) {
+				sender.sendMessage(Settings.preFx + "Nobody has PvP on");
+				return true;
+			}
 			sender.sendMessage(Settings.preFx + "Players with PvP on:");
 			String temp = "";
 			int i = 0;
