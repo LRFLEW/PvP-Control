@@ -167,13 +167,15 @@ public class Commands implements CommandExecutor {
 			String temp = "";
 			int i = 0;
 			for (String p : plugin.PvP) {
-				temp += ("    " + Bukkit.getPlayerExact(p).getDisplayName());
 				if (i >= 3) {
-					sender.sendMessage(temp);
+					sender.sendMessage(Settings.preFx + temp);
 					temp = "";
 					i = 0;
 				}
+				temp += (Bukkit.getPlayerExact(p).getDisplayName() + ", ");
 			}
+			temp = temp.substring(0, temp.length()-2);
+			sender.sendMessage(Settings.preFx + temp);
 			return true;
 		}
 		if (args.length >= 1 && args[0].equalsIgnoreCase("help")) {
