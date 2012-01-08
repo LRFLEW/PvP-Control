@@ -167,19 +167,40 @@ public class Commands implements CommandExecutor {
 				sender.sendMessage(Settings.preFx + "Nobody has PvP on");
 				return true;
 			}
-			sender.sendMessage(Settings.preFx + "Players with PvP on:");
-			String temp = "";
-			int i = 0;
-			for (String p : plugin.PvP) {
-				if (i >= 3) {
-					sender.sendMessage(Settings.preFx + temp);
-					temp = "";
-					i = 0;
+			int page;
+			if (args.length >= 2) try {
+				page = Integer.parseInt(args[1]) - 1;
+				if (page < 0) {
+					if (page == -1) sender.sendMessage(Settings.preFx + "no page 0");
+					else sender.sendMessage(Settings.preFx + "no negative pages");
+					page = 0;
 				}
-				temp += (Bukkit.getPlayerExact(p).getDisplayName() + ", ");
+				if (plugin.PvP.size() > page * 16) {
+					sender.sendMessage(Settings.preFx + "there is no page " + page);
+					return true;
+				}
+			} catch (NumberFormatException e) {
+				sender.sendMessage(Settings.preFx + "\"" + args[1] + "\"" + " is not a number");
+				page = 0;
 			}
-			temp = temp.substring(0, temp.length()-2);
-			sender.sendMessage(Settings.preFx + temp);
+			else page = 0;
+			boolean display = sender instanceof Player;
+			sender.sendMessage(Settings.preFx + "page " + page + " out of " + Math.ceil((double)plugin.PvP.size()/16));
+			String[] names = new String[16];
+			int i = 0, j = 0;
+			for (String p : plugin.PvP) {
+				if (i++ < page * 16) continue;
+				if (display) names[j++] = Bukkit.getPlayer(p).getDisplayName();
+				else names[j++] = p;
+				if (j >= 16) break;
+			}
+			for (i = 0; i < 4 && (i*4) < j; i++) {
+				String temp = "";
+				for (int k = 0; k < 4 && (i*4) + k < j; k++) {
+					temp += Settings.preFx + names[(i*4) + k];
+				}
+				sender.sendMessage(temp);
+			}
 			return true;
 		}
 		if (args.length >= 1 && args[0].equalsIgnoreCase("help")) {
