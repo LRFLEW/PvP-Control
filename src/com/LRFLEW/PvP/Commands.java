@@ -175,7 +175,7 @@ public class Commands implements CommandExecutor {
 					else sender.sendMessage(Settings.preFx + "no negative pages");
 					page = 0;
 				}
-				if (plugin.PvP.size() > page * 16) {
+				if (page * 16 > plugin.PvP.size()) {
 					sender.sendMessage(Settings.preFx + "there is no page " + page);
 					return true;
 				}
