@@ -176,7 +176,7 @@ public class Commands implements CommandExecutor {
 					page = 0;
 				}
 				if (page * 16 > plugin.PvP.size()) {
-					sender.sendMessage(Settings.preFx + "there is no page " + page);
+					sender.sendMessage(Settings.preFx + "there is no page " + (page + 1));
 					return true;
 				}
 			} catch (NumberFormatException e) {
@@ -185,7 +185,7 @@ public class Commands implements CommandExecutor {
 			}
 			else page = 0;
 			boolean display = sender instanceof Player;
-			sender.sendMessage(Settings.preFx + "page " + page + " out of " + Math.ceil((double)plugin.PvP.size()/16));
+			sender.sendMessage(Settings.preFx + "page " + (page + 1) + " out of " + Math.ceil((double)plugin.PvP.size()/16));
 			String[] names = new String[16];
 			int i = 0, j = 0;
 			for (String p : plugin.PvP) {
