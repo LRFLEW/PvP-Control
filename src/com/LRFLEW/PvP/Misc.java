@@ -1,6 +1,7 @@
 package com.LRFLEW.PvP;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.bukkit.Bukkit;
@@ -44,6 +45,53 @@ public class Misc {
 			for (Map.Entry<String, Long> e : plugin.cooldown.entrySet()) {
 				if (e.getValue() <= System.currentTimeMillis())
 					plugin.cooldown.remove(e.getKey());
+			}
+		}
+		
+	}
+	
+	public static class PvPExpire implements Runnable {
+		private final HashSet<String> cooldown;
+		private final String player;
+		private final boolean on;
+		
+		public PvPExpire (HashSet<String> cooldown, String player, boolean on) {
+			this.cooldown = cooldown;
+			this.player = player;
+			this.on = on;
+		}
+
+		@Override
+		public void run() {
+			cooldown.remove(player);
+			Bukkit.getPlayerExact(player).sendMessage(Settings.preFx + "You can now use /pvp " + (on ? "on" : "off"));
+		}
+		
+	}
+	
+	public static class SparExpire implements Runnable {
+		private final HashMap<String, String> spar;
+		private final boolean request;
+		private final String sparrer;
+		private final String sparri;
+		
+		public SparExpire (HashMap<String, String> spar, String sparrer, String sparri, boolean request) {
+			this.sparrer = sparrer;
+			this.sparri = sparri;
+			this.request = request;
+			this.spar = spar;
+		}
+
+		@Override
+		public void run() {
+			spar.remove(sparrer);
+			spar.remove(sparri);
+			if (request) {
+				Bukkit.getPlayerExact(sparri).sendMessage(Settings.preFx + "Your spar request has expired");
+				Bukkit.getPlayerExact(sparrer).sendMessage(Settings.preFx + "The spar request with you has expired");
+			} else {
+				Bukkit.getPlayerExact(sparri).sendMessage(Settings.preFx + "Your sparring has timed out");
+				Bukkit.getPlayerExact(sparri).sendMessage(Settings.preFx + "Your sparring has timed out");
 			}
 		}
 		
